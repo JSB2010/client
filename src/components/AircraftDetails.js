@@ -61,9 +61,12 @@ const AircraftDetails = () => {
         await new Promise(resolve => setTimeout(resolve, 800));
 
         // Use the appropriate API endpoint based on the selected provider
+        // Get the base API URL from environment variable or use the current domain
+        const baseApiUrl = process.env.REACT_APP_API_URL || '/api';
+
         const apiEndpoint = apiProvider === 'flightaware'
-          ? `http://localhost:5001/api/flightaware/aircraft/${flightNumber}/${date}`
-          : `http://localhost:5001/api/aircraft/${flightNumber}/${date}`;
+          ? `${baseApiUrl}/flightaware/aircraft/${flightNumber}/${date}`
+          : `${baseApiUrl}/aircraft/${flightNumber}/${date}`;
 
         const response = await axios.get(apiEndpoint);
         setAircraftData(response.data);
